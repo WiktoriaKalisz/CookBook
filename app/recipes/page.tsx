@@ -7,8 +7,19 @@ import { urlFor } from "@/sanity/lib/image"
 import { getRecipes } from "@/sanity/lib/getRecipes"
 import { FaLeaf, FaPepperHot } from "react-icons/fa"
 
+interface Recipe {
+  _id: string
+  title: string
+  slug: { current: string }
+  category?: string
+  image?: any
+  isVegan?: boolean
+  isVegetarian?: boolean
+  isSpicy?: boolean
+}
+
 export default function RecipesPage() {
-  const [recipes, setRecipes] = useState<any[]>([])
+  const [recipes, setRecipes] = useState<Recipe[]>([])
   const [search, setSearch] = useState("")
   const [category, setCategory] = useState("")
 

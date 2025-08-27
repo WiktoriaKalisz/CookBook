@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CookBook
 
-## Getting Started
+CookBook is a recipe web application, featuring a responsive layout. It's built with Next.js, Sanity CMS, custom React, Tailwind CSS, and JavaScript components.
+It allows users to browse recipes, filter by category, search by name, view detailed recipe instructions, adjust servings, and see dietary indicators like vegan, vegetarian, or spicy. The app supports a light/dark theme powered by ThemeProvider for a dynamic visual experience.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Browse all recipes and filter by category
+- Search recipes by title or keywords
+- Light/dark theme toggle for personalized experience
+- View detailed recipe pages with ingredients, prep/cook time, and instructions
+- Adjust servings dynamically with real-time ingredient scaling
+- Stylized dish images displayed on a plate for each recipe
+- Visual indicators for vegan, vegetarian, or spicy recipes
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js 13+ (App Router) with React components**
+- **Tailwind CSS for responsive styling**
+- **Sanity CMS for content management**
+- **ThemeProvider (next-themes) for light/dark mode**
+- **AJAX-style data fetching for recipes**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Skills Demonstrated
 
-## Learn More
+- Building responsive and interactive UI with React and Tailwind CSS
+- Integrating CMS content dynamically with Sanity
+- Implementing a theme toggle with next-themes
+- Dynamic ingredient scaling based on servings
+- Filtering and searching data in a client-side React application
+- Structuring a scalable Next.js project with clean code and reusable components
 
-To learn more about Next.js, take a look at the following resources:
+## UX Principles Applied
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The design of CookBook incorporates few key UX principles to create an intuitive and user-friendly experience:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Aesthetic-Usability Effect**  
+Stylized dish images on plates, along with consistent typography and color schemes, make the app feel more aesthetically pleasing and more usable.
 
-## Deploy on Vercel
+- **Law of Similarity**  
+Dietary icons (vegan, vegetarian, spicy) share a consistent visual style, allowing users to recognize and understand them quickly.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Chunking**  
+On the recipe list page, all recipes are displayed in uniform cards. This groups each recipe into a distinct, digestible unit, making it easier for users to scan and process multiple items at once.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Law of Proximity**  
+Related elements (e.g., ingredient amounts and serving adjustment buttons) are grouped closely together, making it easier to understand their relationships.
+
+## Run
+
+Go to https://mystorewk.myshopify.com and enter the password: **mystore-demo**
+
+## Preview
+
+![Main Page 1](assets/screenshot1.png)
+![Main Page 2](assets/screenshot2.png)
+![Main Page 3](assets/screenshot3.png)
+![Product](assets/screenshot4.png)
+![Cart](assets/screenshot5.png)
+![Sort](assets/screenshot6.png)

@@ -6,7 +6,31 @@ import { urlFor } from '@/sanity/lib/image'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 
-export default function RecipeDetails({ recipe }: { recipe: any }) {
+interface Ingredient {
+  name: string
+  amount?: number
+  unit?: string
+}
+
+interface Recipe {
+  _id: string
+  title: string
+  slug: { current: string }
+  description?: string
+  category?: string
+  servings?: number
+  prepTime?: number
+  cookTime?: number
+  isVegan?: boolean
+  isVegetarian?: boolean
+  isSpicy?: boolean
+  difficulty?: string
+  image?: any
+  ingredients?: (Ingredient | string)[]
+  instructions?: string[]
+}
+
+export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
   const [servings, setServings] = useState(recipe.servings || 1)
   const originalServings = recipe.servings || 1
   const multiplier = servings / originalServings
@@ -173,10 +197,13 @@ export default function RecipeDetails({ recipe }: { recipe: any }) {
 
               {/* Ingredients */}
               <ul className="space-y-1">
-                {recipe.ingredients.map((item: any, i: number) => {
+              {recipe.ingredients.map((item, i) => {
                   if (typeof item === 'string') return <li key={i}>• {item}</li>
 
-                  const adjusted = Math.round(item.amount * multiplier * 100) / 100
+                  const adjusted = item.amount !== undefined 
+  ? Math.round(item.amount * multiplier * 100) / 100 
+  : 0
+
                   return (
                     <li key={i} className="flex items-center gap-2">
                       {/* Dot for ingredient */}
@@ -187,9 +214,11 @@ export default function RecipeDetails({ recipe }: { recipe: any }) {
                         }}
                       ></span>
 
-                      {!isNaN(adjusted) && (
-                        <span className="text-[#93928e] w-20">{adjusted} {item.unit}</span>
-                      )}
+{item.amount !== undefined && (
+    <span className="text-[#93928e] w-20">
+      {Math.round(item.amount * multiplier * 100) / 100} {item.unit}
+    </span>
+  )}
 
                       <span>{item.name}</span>
                     </li>
@@ -200,16 +229,16 @@ export default function RecipeDetails({ recipe }: { recipe: any }) {
           )}
 
           {/* Instructions */}
-          {recipe.instructions?.length > 0 && (
-            <div>
-              <h2 className="text-3xl font-semibold mb-8">Instructions</h2>
-              <ol className="list-decimal list-inside space-y-2">
-                {recipe.instructions.map((step: string, i: number) => (
-                  <li key={i}>{step}</li>
-                ))}
-              </ol>
-            </div>
-          )}
+{recipe.instructions && recipe.instructions.length > 0 && (
+  <div>
+    <h2 className="text-3xl font-semibold mb-8">Instructions</h2>
+    <ol className="list-decimal list-inside space-y-2">
+      {recipe.instructions.map((step, i) => (
+        <li key={i}>{step}</li>
+      ))}
+    </ol>
+  </div>
+)}
         </div>
 
         {mounted && recipe.image && (
