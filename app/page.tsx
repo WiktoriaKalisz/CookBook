@@ -8,8 +8,20 @@ import { getRecipes } from "@/sanity/lib/getRecipes"
 import { FaSearch } from "react-icons/fa"
 import { useTheme } from "next-themes"
 
+interface Recipe {
+  _id: string
+  title: string
+  slug: { current: string }
+  category?: string
+  image?: object
+  isVegan?: boolean
+  isVegetarian?: boolean
+  isSpicy?: boolean
+  difficulty: string
+}
+
 export default function RecipesPage() {
-  const [recipes, setRecipes] = useState<any[]>([])
+  const [recipes, setRecipes] = useState<Recipe[]>([])
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState("")
   const [difficulty, setDifficulty] = useState("")

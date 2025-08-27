@@ -25,7 +25,7 @@ interface Recipe {
   isVegetarian?: boolean
   isSpicy?: boolean
   difficulty?: string
-  image?: any
+  image?: object
   ingredients?: (Ingredient | string)[]
   instructions?: string[]
 }
