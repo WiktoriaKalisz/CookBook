@@ -48,13 +48,13 @@ Related elements (e.g., ingredient amounts and serving adjustment buttons) are g
 
 ## Run
 
-Go to https://mystorewk.myshopify.com and enter the password: **mystore-demo**
+Go to [https://cook-book-gray-tau.vercel.app](https://cook-book-gray-tau.vercel.app)  
+No password is required.
 
 ## Preview
 
-![Main Page 1](assets/screenshot1.png)
-![Main Page 2](assets/screenshot2.png)
-![Main Page 3](assets/screenshot3.png)
-![Product](assets/screenshot4.png)
-![Cart](assets/screenshot5.png)
-![Sort](assets/screenshot6.png)
+![Recipes Page Filtered](public/icons/sc1.png)
+![Recipes Page Filtered Dark](public/icons/sc2.png)
+![Recipe Details Page](public/icons/sc3.png)
+![Recipe Details Page Responsive Dark](public/icons/sc4.png)
+![Recipes Page Responsive](public/icons/sc5.png)
