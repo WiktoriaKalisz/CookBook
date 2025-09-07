@@ -19,6 +19,7 @@ It allows users to browse recipes, filter by category, search by name, view deta
 - **Tailwind CSS for responsive styling**
 - **Sanity CMS for content management**
 - **ThemeProvider (next-themes) for light/dark mode**
+- **Vercel for deployment and hosting**
 - **AJAX-style data fetching for recipes**
 
 ## Skills Demonstrated
@@ -29,6 +30,7 @@ It allows users to browse recipes, filter by category, search by name, view deta
 - Dynamic ingredient scaling based on servings
 - Filtering and searching data in a client-side React application
 - Structuring a scalable Next.js project with clean code and reusable components
+- Configuring deployment on Vercel with environment variables and Sanity CORS settings
 
 ## UX Principles Applied
 
