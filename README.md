@@ -1,6 +1,6 @@
 # CookBook
 
-CookBook is a recipe web application, featuring a responsive layout. It's built with Next.js, Sanity CMS, custom React, Tailwind CSS, and JavaScript components.
+CookBook is a recipe web application, featuring a responsive layout. It's built with Next.js, TypeScript, Sanity CMS, and custom React + Tailwind CSS components.
 It allows users to browse recipes, filter by category, search by name, view detailed recipe instructions, adjust servings, and see dietary indicators like vegan, vegetarian, or spicy. The app supports a light/dark theme powered by ThemeProvider for a dynamic visual experience.
 
 ## Features
