@@ -41,7 +41,6 @@ export default function RecipesPage() {
     fetchData()
   }, [])
 
-  // Filter recipes
   const filtered = recipes.filter(recipe => {
     const matchesSearch = recipe.title.toLowerCase().includes(search.toLowerCase());
     
