@@ -7,6 +7,7 @@ import { urlFor } from "@/sanity/lib/image"
 import { getRecipes } from "@/sanity/lib/getRecipes"
 import { FaSearch } from "react-icons/fa"
 import { useTheme } from "next-themes"
+import { ThemeIcon, RecipeIcon, LoadingSpinner } from "@/app/components"
 
 interface Recipe {
   _id: string
@@ -25,6 +26,8 @@ export default function RecipesPage() {
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState("")
   const [difficulty, setDifficulty] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
@@ -35,8 +38,17 @@ export default function RecipesPage() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getRecipes()
-      setRecipes(data)
+      try {
+        setLoading(true)
+        setError(null)
+        const data = await getRecipes()
+        setRecipes(data)
+      } catch (err) {
+        console.error("Failed to fetch recipes:", err)
+        setError("Failed to load recipes. Please try again later.")
+      } finally {
+        setLoading(false)
+      }
     }
     fetchData()
   }, [])
@@ -59,16 +71,25 @@ export default function RecipesPage() {
     return matchesSearch && matchesFilter && matchesDifficulty;
   });
 
-  const getIcon = (type: "vegan" | "vegetarian" | "spicy") => {
-    const isDark = resolvedTheme === "dark"
-    switch (type) {
-      case "vegan":
-        return isDark ? "/icons/vegan2.png" : "/icons/vegan.png"
-      case "vegetarian":
-        return isDark ? "/icons/vegetarian2.png" : "/icons/vegetarian.png"
-      case "spicy":
-        return isDark ? "/icons/spicy2.png" : "/icons/spicy.png"
-    }
+  if (loading) {
+    return <LoadingSpinner />
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center px-4">
+          <h1 className="text-3xl font-bold text-red-600 mb-4">Error</h1>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -80,12 +101,12 @@ export default function RecipesPage() {
         
         <Link href="/">
           {mounted && (
-            <Image
-              src={resolvedTheme === "dark" ? "/icons/restaurant2.png" : "/icons/restaurant.png"}
-              alt="Leaf icon"
+            <ThemeIcon
+              type="logo"
               width={40}
               height={40}
               className="cursor-pointer"
+              alt="Logo"
             />
           )}
         </Link>
@@ -97,12 +118,13 @@ export default function RecipesPage() {
             <button
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
               className="p-1"
+              aria-label="Toggle theme"
             >
-              <Image
-                src={resolvedTheme === "dark" ? "/icons/sun.png" : "/icons/moon.png"}
-                alt="Toggle theme"
+              <ThemeIcon
+                type="theme-toggle"
                 width={24}
                 height={24}
+                alt="Toggle theme"
               />
             </button>
           )}
@@ -125,10 +147,12 @@ export default function RecipesPage() {
               color: "var(--color)",
               borderColor: "var(--color)"
             }}
+            aria-label="Search recipes"
           />
           <FaSearch
             className="absolute left-3 top-1/2 transform -translate-y-1/2"
             style={{ color: "var(--color)" }}
+            aria-hidden="true"
           />
         </div>
       </div>
@@ -147,6 +171,8 @@ export default function RecipesPage() {
                 color: difficulty === level ? "var(--background)" : "var(--color)",
                 borderColor: "var(--color)"
               }}
+              aria-pressed={difficulty === level}
+              aria-label={`Filter by ${level} difficulty`}
             >
               {level}
             </button>
@@ -164,6 +190,8 @@ export default function RecipesPage() {
                 color: filter === f ? "var(--background)" : "var(--color)",
                 borderColor: "var(--color)"
               }}
+              aria-pressed={filter === f}
+              aria-label={`Filter by ${f}`}
             >
               {f}
             </button>
@@ -173,53 +201,61 @@ export default function RecipesPage() {
 
       {/* Recipes */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-20 gap-y-8">
-        {filtered.map(recipe => (
-          <Link
-            key={recipe._id}
-            href={`/recipes/${recipe.slug.current}`}
-            className="border-1 p-5 transition-transform duration-150 transform hover:scale-105"
-            style={{
-              backgroundColor: "var(--background)",
-              color: "var(--color)",
-              borderColor: "var(--color)",
-              borderWidth: "1px",
-              borderStyle: "solid",
-            }}
-          >
-            {/* Image */}
-            <div className="relative w-full aspect-square overflow-hidden bg-gray-100">
-              {recipe.image && (
-                <Image
-                  src={urlFor(recipe.image).width(400).height(400).url()}
-                  alt={recipe.title}
-                  fill
-                  className="object-cover"
-                />
-              )}
-            </div>
-
-            {/* Info */}
-            <div className="p-4 text-center">
-              <h3 className="text-lg font-bold mb-2">{recipe.title}</h3>
-              <p className="text-sm mb-2" style={{ color: "var(--color)" }}>
-                {recipe.category}
-              </p>
-
-              {/* Icons */}
-              <div className="flex gap-2 justify-center flex-wrap text-xs">
-                {recipe.isVegan && (
-                  <Image src={getIcon("vegan")!} alt="Vegan" width={20} height={20} />
-                )}
-                {recipe.isVegetarian && (
-                  <Image src={getIcon("vegetarian")!} alt="Vegetarian" width={20} height={20} />
-                )}
-                {recipe.isSpicy && (
-                  <Image src={getIcon("spicy")!} alt="Spicy" width={20} height={20} />
+        {filtered.length === 0 ? (
+          <div className="col-span-full text-center py-12">
+            <p className="text-lg text-gray-500">
+              {recipes.length === 0 ? "No recipes found." : "No recipes match your filters."}
+            </p>
+          </div>
+        ) : (
+          filtered.map(recipe => (
+            <Link
+              key={recipe._id}
+              href={`/recipes/${recipe.slug.current}`}
+              className="border-1 p-5 transition-transform duration-150 transform hover:scale-105"
+              style={{
+                backgroundColor: "var(--background)",
+                color: "var(--color)",
+                borderColor: "var(--color)",
+                borderWidth: "1px",
+                borderStyle: "solid",
+              }}
+            >
+              {/* Image */}
+              <div className="relative w-full aspect-square overflow-hidden bg-gray-100">
+                {recipe.image && (
+                  <Image
+                    src={urlFor(recipe.image).width(400).height(400).url()}
+                    alt={recipe.title}
+                    fill
+                    className="object-cover"
+                  />
                 )}
               </div>
-            </div>
-          </Link>
-        ))}
+
+              {/* Info */}
+              <div className="p-4 text-center">
+                <h3 className="text-lg font-bold mb-2">{recipe.title}</h3>
+                <p className="text-sm mb-2" style={{ color: "var(--color)" }}>
+                  {recipe.category}
+                </p>
+
+                {/* Icons */}
+                <div className="flex gap-2 justify-center flex-wrap text-xs">
+                  {recipe.isVegan && (
+                    <RecipeIcon type="vegan" width={20} height={20} alt="Vegan" />
+                  )}
+                  {recipe.isVegetarian && (
+                    <RecipeIcon type="vegetarian" width={20} height={20} alt="Vegetarian" />
+                  )}
+                  {recipe.isSpicy && (
+                    <RecipeIcon type="spicy" width={20} height={20} alt="Spicy" />
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))
+        )}
       </div>
 
       {/* Divider line at bottom */}

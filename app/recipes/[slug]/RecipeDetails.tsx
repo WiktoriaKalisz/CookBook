@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
+import { ThemeIcon, RecipeIcon } from '@/app/components'
 
 interface Ingredient {
   name: string
@@ -41,18 +42,6 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
     setMounted(true)
   }, [])
 
-  const getIcon = (type: "vegan" | "vegetarian" | "spicy") => {
-    const isDark = resolvedTheme === "dark"
-    switch (type) {
-      case "vegan":
-        return isDark ? "/icons/vegan2.png" : "/icons/vegan.png"
-      case "vegetarian":
-        return isDark ? "/icons/vegetarian2.png" : "/icons/vegetarian.png"
-      case "spicy":
-        return isDark ? "/icons/spicy2.png" : "/icons/spicy.png"
-    }
-  }
-
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 font-serif">
 
@@ -60,12 +49,12 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
       <div className="flex items-center justify-between mb-10">
         <Link href="/">
           {mounted && (
-            <Image
-              src={resolvedTheme === "dark" ? "/icons/restaurant2.png" : "/icons/restaurant.png"}
-              alt="Leaf icon"
+            <ThemeIcon
+              type="logo"
               width={40}
               height={40}
               className="cursor-pointer"
+              alt="Logo"
             />
           )}
         </Link>
@@ -74,12 +63,13 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
           <button
             onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
             className="p-1"
+            aria-label="Toggle theme"
           >
-            <Image
-              src={resolvedTheme === "dark" ? "/icons/sun.png" : "/icons/moon.png"}
-              alt="Toggle theme"
+            <ThemeIcon
+              type="theme-toggle"
               width={24}
               height={24}
+              alt="Toggle theme"
             />
           </button>
         )}
@@ -94,19 +84,19 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
           <div className="flex items-center gap-4 mb-8 text-sm">
             {recipe.isVegan && (
               <div className="flex items-center gap-1">
-                <Image src={getIcon("vegan")!} alt="Vegan" width={20} height={20} />
+                <RecipeIcon type="vegan" width={20} height={20} alt="Vegan" />
                 Vegan
               </div>
             )}
             {recipe.isVegetarian && (
               <div className="flex items-center gap-1">
-                <Image src={getIcon("vegetarian")!} alt="Vegetarian" width={20} height={20} />
+                <RecipeIcon type="vegetarian" width={20} height={20} alt="Vegetarian" />
                 Vegetarian
               </div>
             )}
             {recipe.isSpicy && (
               <div className="flex items-center gap-1">
-                <Image src={getIcon("spicy")!} alt="Spicy" width={20} height={20} />
+                <RecipeIcon type="spicy" width={20} height={20} alt="Spicy" />
                 Spicy
               </div>
             )}
@@ -199,10 +189,6 @@ export default function RecipeDetails({ recipe }: { recipe: Recipe }) {
               <ul className="space-y-1">
               {recipe.ingredients.map((item, i) => {
                   if (typeof item === 'string') return <li key={i}>• {item}</li>
-
-                  const adjusted = item.amount !== undefined 
-  ? Math.round(item.amount * multiplier * 100) / 100 
-  : 0
 
                   return (
                     <li key={i} className="flex items-center gap-2">
