@@ -9,7 +9,10 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "e2e": "cypress run",
+    "e2e:open": "cypress open",
+    "e2e:headless": "cypress run --headless"
   },
   "dependencies": {
     "@sanity/image-url": "^1.1.0",
@@ -34,6 +37,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-jest": "^30.2.0",
+    "cypress": "^14.5.4",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
     "jest": "^30.2.0",

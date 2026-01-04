@@ -8,6 +8,7 @@ import { getRecipes } from "@/sanity/lib/getRecipes"
 import { FaSearch } from "react-icons/fa"
 import { useTheme } from "next-themes"
 import { ThemeIcon, RecipeIcon, LoadingSpinner } from "@/app/components"
+import ErrorPage from "./components/ErrorPage"
 
 interface Recipe {
   _id: string
@@ -76,21 +77,8 @@ export default function RecipesPage() {
   }
 
   if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center px-4">
-          <h1 className="text-3xl font-bold text-red-600 mb-4">Error</h1>
-          <p className="text-gray-600 mb-6">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    )
-  }
+  return <ErrorPage message={error} />
+}
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-20" 
@@ -131,7 +119,7 @@ export default function RecipesPage() {
         </div>
       </div>
 
-      <h2 className="text-6xl font-bold mb-10 text-center">Recipes</h2>
+      <h2 data-cy="recipes-title" className="text-6xl font-bold mb-10 text-center">Recipes</h2>
 
       {/* Search bar */}
       <div className="flex justify-center mb-10 px-4 sm:px-10 md:px-20">
@@ -148,6 +136,7 @@ export default function RecipesPage() {
               borderColor: "var(--color)"
             }}
             aria-label="Search recipes"
+            data-cy="search-input"
           />
           <FaSearch
             className="absolute left-3 top-1/2 transform -translate-y-1/2"
@@ -166,6 +155,7 @@ export default function RecipesPage() {
               key={level}
               onClick={() => setDifficulty(difficulty === level ? "" : level)}
               className="px-3 py-1 rounded-full border"
+              data-cy={`filter-${level.toLowerCase()}`} 
               style={{
                 backgroundColor: difficulty === level ? "var(--color)" : "transparent",
                 color: difficulty === level ? "var(--background)" : "var(--color)",
@@ -190,6 +180,7 @@ export default function RecipesPage() {
                 color: filter === f ? "var(--background)" : "var(--color)",
                 borderColor: "var(--color)"
               }}
+              data-cy={`filter-${f.toLowerCase()}`}
               aria-pressed={filter === f}
               aria-label={`Filter by ${f}`}
             >

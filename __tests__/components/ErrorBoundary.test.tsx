@@ -1,8 +1,7 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { ErrorBoundary } from '@/app/components/ErrorBoundary'
 
-// component throwing an error
 const ThrowError = () => {
   throw new Error('Test error')
 }
@@ -29,24 +28,25 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('Test content')).toBeInTheDocument()
   })
 
-  it('renders error UI when error is caught', () => {
-    render(
-      <ErrorBoundary>
-        <ThrowError />
-      </ErrorBoundary>
-    )
+  describe('with ThrowError component', () => {
+    it('renders error UI when error is caught', () => {
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument()
+    })
 
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument()
-  })
+    it('displays the error message', () => {
+      expect(screen.getByText('Test error')).toBeInTheDocument()
+    })
 
-  it('displays error message', () => {
-    render(
-      <ErrorBoundary>
-        <ThrowError />
-      </ErrorBoundary>
-    )
+    it('renders reload button', () => {
+      expect(screen.getByText('Reload Page')).toBeInTheDocument()
+    })
 
-    expect(screen.getByText('Test error')).toBeInTheDocument()
+    it('reload button calls window.location.reload', () => {
+      const reloadSpy = jest.spyOn(window.location, 'reload').mockImplementation(() => {})
+      fireEvent.click(screen.getByText('Reload Page'))
+      expect(reloadSpy).toHaveBeenCalled()
+      reloadSpy.mockRestore()
+    })
   })
 
   it('displays default error message when error has no message', () => {
@@ -63,17 +63,6 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('An unexpected error occurred')).toBeInTheDocument()
   })
 
-  it('renders reload button', () => {
-    render(
-      <ErrorBoundary>
-        <ThrowError />
-      </ErrorBoundary>
-    )
-
-    const reloadButton = screen.getByText('Reload Page')
-    expect(reloadButton).toBeInTheDocument()
-  })
-
   it('renders custom fallback when provided', () => {
     const customFallback = <div>Custom error message</div>
 
@@ -85,15 +74,5 @@ describe('ErrorBoundary', () => {
 
     expect(screen.getByText('Custom error message')).toBeInTheDocument()
     expect(screen.queryByText('Something went wrong')).not.toBeInTheDocument()
-  })
-
-  it('calls componentDidCatch when error occurs', () => {
-    render(
-      <ErrorBoundary>
-        <ThrowError />
-      </ErrorBoundary>
-    )
-
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument()
   })
 })
