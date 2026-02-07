@@ -111,6 +111,10 @@ jobs:
             wiktoriakalisz/cookbook:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
+            NEXT_PUBLIC_SANITY_DATASET=${{ secrets.SANITY_DATASET }}
+            NEXT_PUBLIC_SANITY_API_VERSION=2025-08-06
 
       - name: Docker image info
         run: echo "Pushed image wiktoriakalisz/cookbook:${{ env.IMAGE_TAG }}"
