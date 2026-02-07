@@ -13,6 +13,8 @@ It allows users to browse recipes, filter by category, search by name, view deta
 - Stylized dish images displayed on a plate for each recipe
 - Visual indicators for vegan, vegetarian, or spicy recipes
 
+## CICD
+
 ## Technologies Used
 
 - **Next.js 13+ (App Router) with React components**
