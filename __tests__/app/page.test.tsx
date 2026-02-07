@@ -301,7 +301,7 @@ describe('RecipesPage Component', () => {
     render(<RecipesPage />)
 
     await waitFor(() => {
-      expect(screen.getByText('Error')).toBeInTheDocument()
+      expect(screen.getByText('Something went wrong')).toBeInTheDocument()
       expect(screen.getByText('Failed to load recipes. Please try again later.')).toBeInTheDocument()
     })
   })
