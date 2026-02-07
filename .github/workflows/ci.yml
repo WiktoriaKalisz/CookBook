@@ -37,9 +37,6 @@ jobs:
           name: jest-coverage
           path: coverage
 
-      - name: Build Next.js
-        run: npm run build
-
       - name: Run Cypress E2E tests
         uses: cypress-io/github-action@v6
         with:
