@@ -15,6 +15,14 @@ It allows users to browse recipes, filter by category, search by name, view deta
 
 ## CICD
 
+CookBook uses a CI/CD pipeline to ensure high-quality and reliable deployments:
+- **Automated Testing & Build**  
+Every push or pull request triggers ESLint, TypeScript type checks, unit tests, and end-to-end tests.
+- **Dockerized Deployment**  
+On the main branch, successful builds are automatically packaged into Docker images and pushed to DockerHub.
+- **Seamless Hosting**  
+The pipeline integrates with Vercel for instant deployment, ensuring the live app is always up-to-date.
+
 ## Technologies Used
 
 - **Next.js 13+ (App Router) with React components**
