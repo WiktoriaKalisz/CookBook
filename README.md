@@ -32,7 +32,8 @@ The pipeline integrates with Vercel for instant deployment, ensuring the live ap
 - **Vercel for deployment and hosting**
 - **AJAX-style data fetching for recipes**
 - **Jest for unit testing**
-- **Cypress for e2e testing**
+- **Cypress for e2e testing**  
+- **Docker for containerized builds**
 
 ## Testing
 ### Jest
