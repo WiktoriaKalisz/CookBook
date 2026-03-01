@@ -15,7 +15,7 @@ It allows users to browse recipes, filter by category, search by name, view deta
 
 ## CICD
 
-CookBook uses a CI/CD pipeline to ensure high-quality and reliable deployments:
+CookBook uses a CI/CD pipeline to ensure reliable deployments:
 - **Automated Testing & Build**  
 Every push or pull request triggers ESLint, TypeScript type checks, unit tests, and end-to-end tests.
 - **Dockerized Deployment**  
@@ -31,6 +31,19 @@ The pipeline integrates with Vercel for instant deployment, ensuring the live ap
 - **ThemeProvider (next-themes) for light/dark mode**
 - **Vercel for deployment and hosting**
 - **AJAX-style data fetching for recipes**
+- **Jest for unit testing**
+- **Cypress for e2e testing**
+
+## Testing
+### Jest
+- Unit tests coverage reports are generated in HTML and saved in CI artifacts for inspection.
+### Cypress
+- End-to-end tests simulate real user flows:
+  - Browsing recipes and filtering by category
+  - Searching for recipes by title or keywords
+  - Viewing detailed recipe pages with ingredients, instructions, and dietary indicators
+  - Adjusting servings dynamically
+- Coverage of critical workflows complements unit testing.
 
 ## Skills Demonstrated
 
@@ -41,6 +54,10 @@ The pipeline integrates with Vercel for instant deployment, ensuring the live ap
 - Filtering and searching data in a client-side React application
 - Structuring a scalable Next.js project with clean code and reusable components
 - Configuring deployment on Vercel with environment variables and Sanity CORS settings
+- Setting up CI/CD pipeline with GitHub Actions to automatically lint, run unit and e2e tests, collect coverage and deploy buulds to Vercel
+- Writing unit tests with Jest and generating coverage reports
+- Writing end-to-end tests with Cypress to simulate real user interactions
+- Managing test artifacts by uploading coverage reports for monitoring code quality
 
 ## UX Principles Applied
 
