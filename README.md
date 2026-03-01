@@ -36,8 +36,10 @@ The pipeline integrates with Vercel for instant deployment, ensuring the live ap
 - **Docker for containerized builds**
 
 ## Testing
+
 ### Jest
 - Unit tests coverage reports are generated in HTML and saved in CI artifacts for inspection.
+
 ### Cypress
 - End-to-end tests simulate real user flows:
   - Browsing recipes and filtering by category
