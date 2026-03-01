@@ -86,7 +86,7 @@ jobs:
           NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET=${{ secrets.SANITY_DATASET }}
           NEXT_PUBLIC_SANITY_API_VERSION=2025-08-06
-          NEXT_PUBLIC_APP_URL=https://cookbook.example.com
+          NEXT_PUBLIC_APP_URL=https://cook-book-wiktoria.vercel.app
           EOF
 
       - name: Set up Docker Buildx

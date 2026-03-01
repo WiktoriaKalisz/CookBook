@@ -78,7 +78,7 @@ Related elements (e.g., ingredient amounts and serving adjustment buttons) are g
 
 ## Run
 
-Go to [https://cook-book-gray-tau.vercel.app](https://cook-book-gray-tau.vercel.app)  
+Go to [https://cook-book-wiktoria.vercel.app](https://cook-book-wiktoria.vercel.app)  
 No password is required.
 
 ## Preview
